@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game - Catie Wheatley</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #1a2e1a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            color: #c8e6b0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            color: #7ec850;
+            letter-spacing: 2px;
+        }
+
+        #scoreboard {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+        }
+
+        #scoreboard span {
+            color: #c8e6b0;
+        }
+
+        #scoreboard strong {
+            color: #7ec850;
+        }
+
+        #game-container {
+            position: relative;
+        }
+
+        canvas {
+            border: 3px solid #5a8a3a;
+            border-radius: 6px;
+            background-color: #0f1f0f;
+            display: block;
+        }
+
+        #overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        #overlay h2 {
+            font-size: 2rem;
+            color: #7ec850;
+            margin-bottom: 12px;
+        }
+
+        #overlay p {
+            font-size: 1rem;
+            color: #c8e6b0;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        #overlay button {
+            background-color: #5a8a3a;
+            color: #ffffff;
+            border: none;
+            padding: 12px 32px;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        #overlay button:hover {
+            background-color: #7ec850;
+            color: #1a2e1a;
+        }
+
+        #controls {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #6a9a50;
+        }
+
+        #controls kbd {
+            background-color: #2e4a1e;
+            border: 1px solid #5a8a3a;
+            border-radius: 3px;
+            padding: 2px 7px;
+            font-size: 0.85rem;
+            color: #c8e6b0;
+        }
+
+        #back-link {
+            margin-top: 24px;
+            font-size: 0.9rem;
+        }
+
+        #back-link a {
+            color: #6a9a50;
+            text-decoration: none;
+        }
+
+        #back-link a:hover {
+            color: #7ec850;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🐍 Snake</h1>
+
+    <div id="scoreboard">
+        <span>Score: <strong id="score">0</strong></span>
+        <span>Best: <strong id="best">0</strong></span>
+        <span>Level: <strong id="level">1</strong></span>
+    </div>
+
+    <div id="game-container">
+        <canvas id="gameCanvas" width="400" height="400"></canvas>
+        <div id="overlay">
+            <h2 id="overlay-title">Snake</h2>
+            <p id="overlay-msg">Use arrow keys or WASD to move.<br>Eat the food. Don't hit the walls or yourself!</p>
+            <button id="overlay-btn" onclick="startGame()">Start Game</button>
+        </div>
+    </div>
+
+    <div id="controls">
+        <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> &nbsp; or &nbsp;
+        <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> to move &nbsp;|&nbsp;
+        <kbd>P</kbd> to pause
+    </div>
+
+    <div id="back-link">
+        <a href="hiking.html">&#8592; Back to Hiking Page</a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const overlay = document.getElementById('overlay');
+        const overlayTitle = document.getElementById('overlay-title');
+        const overlayMsg = document.getElementById('overlay-msg');
+        const scoreEl = document.getElementById('score');
+        const bestEl = document.getElementById('best');
+        const levelEl = document.getElementById('level');
+
+        const GRID = 20;
+        const COLS = canvas.width / GRID;
+        const ROWS = canvas.height / GRID;
+
+        let snake, dir, nextDir, food, score, best, level, speed, gameLoop, paused, running;
+
+        best = 0;
+
+        function startGame() {
+            overlay.style.display = 'none';
+            snake = [{ x: 10, y: 10 }];
+            dir = { x: 1, y: 0 };
+            nextDir = { x: 1, y: 0 };
+            score = 0;
+            level = 1;
+            speed = 150;
+            paused = false;
+            running = true;
+            scoreEl.textContent = 0;
+            levelEl.textContent = 1;
+            placeFood();
+            clearInterval(gameLoop);
+            gameLoop = setInterval(tick, speed);
+        }
+
+        function placeFood() {
+            let pos;
+            do {
+                pos = {
+                    x: Math.floor(Math.random() * COLS),
+                    y: Math.floor(Math.random() * ROWS)
+                };
+            } while (snake.some(s => s.x === pos.x && s.y === pos.y));
+            food = pos;
+        }
+
+        function tick() {
+            if (paused) return;
+
+            dir = { ...nextDir };
+
+            const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+
+            // Wall collision
+            if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS) {
+                return endGame();
+            }
+
+            // Self collision
+            if (snake.some(s => s.x === head.x && s.y === head.y)) {
+                return endGame();
+            }
+
+            snake.unshift(head);
+
+            if (head.x === food.x && head.y === food.y) {
+                score += level * 10;
+                scoreEl.textContent = score;
+                if (score > best) {
+                    best = score;
+                    bestEl.textContent = best;
+                }
+                // Level up every 5 foods
+                if (score % 50 === 0) {
+                    level++;
+                    levelEl.textContent = level;
+                    clearInterval(gameLoop);
+                    speed = Math.max(60, speed - 15);
+                    gameLoop = setInterval(tick, speed);
+                }
+                placeFood();
+            } else {
+                snake.pop();
+            }
+
+            draw();
+        }
+
+        function draw() {
+            // Background
+            ctx.fillStyle = '#0f1f0f';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Grid dots
+            ctx.fillStyle = '#1a2e1a';
+            for (let x = 0; x < COLS; x++) {
+                for (let y = 0; y < ROWS; y++) {
+                    ctx.fillRect(x * GRID + 9, y * GRID + 9, 2, 2);
+                }
+            }
+
+            // Food
+            ctx.fillStyle = '#e05a3a';
+            ctx.beginPath();
+            ctx.arc(
+                food.x * GRID + GRID / 2,
+                food.y * GRID + GRID / 2,
+                GRID / 2 - 2, 0, Math.PI * 2
+            );
+            ctx.fill();
+
+            // Food shine
+            ctx.fillStyle = 'rgba(255,255,255,0.3)';
+            ctx.beginPath();
+            ctx.arc(
+                food.x * GRID + GRID / 2 - 3,
+                food.y * GRID + GRID / 2 - 3,
+                3, 0, Math.PI * 2
+            );
+            ctx.fill();
+
+            // Snake
+            snake.forEach((seg, i) => {
+                const ratio = i / snake.length;
+                // Gradient from bright green head to darker tail
+                const g = Math.floor(180 - ratio * 80);
+                ctx.fillStyle = i === 0 ? '#7ec850' : `rgb(60, ${g}, 40)`;
+                ctx.beginPath();
+                ctx.roundRect(
+                    seg.x * GRID + 1,
+                    seg.y * GRID + 1,
+                    GRID - 2,
+                    GRID - 2,
+                    i === 0 ? 6 : 3
+                );
+                ctx.fill();
+
+                // Eyes on head
+                if (i === 0) {
+                    ctx.fillStyle = '#0f1f0f';
+                    const ex = dir.x === 0 ? [4, 12] : dir.x === 1 ? [13, 13] : [7, 7];
+                    const ey = dir.y === 0 ? [4, 12] : dir.y === 1 ? [13, 13] : [7, 7];
+                    ctx.beginPath();
+                    ctx.arc(seg.x * GRID + ex[0], seg.y * GRID + ey[0], 2, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(seg.x * GRID + ex[1], seg.y * GRID + ey[1], 2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+        }
+
+        function endGame() {
+            clearInterval(gameLoop);
+            running = false;
+            overlayTitle.textContent = 'Game Over!';
+            overlayMsg.textContent = `You scored ${score} points.\nReach higher levels by eating faster!`;
+            document.getElementById('overlay-btn').textContent = 'Play Again';
+            overlay.style.display = 'flex';
+        }
+
+        document.addEventListener('keydown', e => {
+            switch (e.key) {
+                case 'ArrowUp':    case 'w': case 'W':
+                    if (dir.y !== 1)  nextDir = { x: 0, y: -1 }; break;
+                case 'ArrowDown':  case 's': case 'S':
+                    if (dir.y !== -1) nextDir = { x: 0, y: 1 };  break;
+                case 'ArrowLeft':  case 'a': case 'A':
+                    if (dir.x !== 1)  nextDir = { x: -1, y: 0 }; break;
+                case 'ArrowRight': case 'd': case 'D':
+                    if (dir.x !== -1) nextDir = { x: 1, y: 0 };  break;
+                case 'p': case 'P':
+                    if (running) paused = !paused; break;
+            }
+            if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) {
+                e.preventDefault();
+            }
+        });
+    </script>
+
+</body>
+</html>

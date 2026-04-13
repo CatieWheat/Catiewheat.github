@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiking - Catie Wheatley</title>
+    <link rel="stylesheet" href="hiking.css">
+</head>
+<body>
+
+    <!-- Navigation back to main site -->
+    <div id="navbar">
+        <a href="index.html">&#8592; Back to Main Site</a>
+    </div>
+
+    <!-- Hero / Header -->
+    <div id="hero">
+        <h1>Hiking</h1>
+        <p>My favorite way to explore the world one trail at a time.</p>
+    </div>
+
+    <!-- On-page anchor nav -->
+    <div id="anchor-nav">
+        <a href="#why">Why I Hike</a>
+        <a href="#gear">Essential Gear</a>
+        <a href="#trails">Favorite Trails</a>
+        <a href="#video">Watch</a>
+        <a href="#data">Trail Data</a>
+    </div>
+
+    <!-- Why I Hike -->
+    <div id="why" class="section">
+        <h2>Why I Hike</h2>
+        <p>
+            There's something about being out on a trail, surrounded by trees, mountains, and fresh air.
+            It resets everything. Hiking has taught me patience, perseverance, and how to appreciate the
+            small things. Whether it's a quick 2-mile loop or a full-day summit push, every hike leaves me
+            feeling better than when I started.
+        </p>
+        <img src="assets/img/hiking.png"
+             alt="Hiker on a mountain trail" class="trail-img">
+    </div>
+
+    <!-- Essential Gear -->
+    <div id="gear" class="section alt-section">
+        <h2>Essential Gear</h2>
+        <p>Good gear makes all the difference. Here's what I never hit the trail without, organized by priority:</p>
+
+        <ol class="gear-list">
+            <li>
+                Safety Essentials
+                <ul>
+                    <li>Map and compass (don't rely only on your phone)</li>
+                    <li>First aid kit</li>
+                    <li>Emergency whistle</li>
+                    <li>Rain jacket or emergency poncho</li>
+                </ul>
+            </li>
+            <li>
+                Navigation & Comfort
+                <ul>
+                    <li>Trekking poles</li>
+                    <li>Headlamp with extra batteries</li>
+                    <li>Sunscreen and sunglasses</li>
+                </ul>
+            </li>
+            <li>
+                Food & Water
+                <ul>
+                    <li>At least 2 liters of water per person</li>
+                    <li>High-energy snacks (trail mix, bars, jerky)</li>
+                    <li>Water filter or purification tablets</li>
+                </ul>
+            </li>
+            <li>
+                Clothing & Footwear
+                <ul>
+                    <li>Moisture-wicking base layers</li>
+                    <li>Sturdy, broken-in hiking boots</li>
+                    <li>Wool or synthetic hiking socks</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <!-- Favorite Trails -->
+    <div id="trails" class="section">
+        <h2>Favorite Trails</h2>
+        <p>These are some trails at the top of my list — many near Utah, where I go to school.</p>
+
+        <div class="trail-cards">
+            <div class="trail-card">
+                <h3>Angels Landing</h3>
+                <p>Zion National Park, UT &mdash; 5.4 miles, strenuous</p>
+            </div>
+            <div class="trail-card">
+                <h3>Emerald Pools</h3>
+                <p>Zion National Park, UT &mdash; 3 miles, moderate</p>
+            </div>
+            <div class="trail-card">
+                <h3>Delicate Arch</h3>
+                <p>Arches National Park, UT &mdash; 3 miles, moderate</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- YouTube Video -->
+    <div id="video" class="section alt-section">
+        <h2>Watch: 7 Epic Utah Hikes You Must Do</h2>
+        <p>This video covers some of the most breathtaking trails in Utah — a great starting point if you're planning a trip.</p>
+        <div class="video-wrapper">
+            <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/cMJgRjYDTOg"
+                title="7 Epic Utah Hikes You Must Do"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+
+    <!-- Tableau Graph -->
+    <div id="data" class="section">
+        <h2>Trail Data Visualization</h2>
+        <p>An interactive look at national park visitation trends across the US — including many hiking hotspots.</p>
+        <div class="tableau-wrapper">
+            <div class='tableauPlaceholder' id='viz1' style='position: relative'>
+                <noscript>
+                    <a href='#'>
+                        <img alt='National Park Visitation' src='https://public.tableau.com/static/images/Na/NationalParkVisitation_16/NationalParkVisitation/1_rss.png' style='border: none' />
+                    </a>
+                </noscript>
+                <object class='tableauViz' style='display:none;'>
+                    <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+                    <param name='embed_code_version' value='3' />
+                    <param name='site_root' value='' />
+                    <param name='name' value='NationalParkVisitation_16/NationalParkVisitation' />
+                    <param name='tabs' value='no' />
+                    <param name='toolbar' value='yes' />
+                    <param name='static_image' value='https://public.tableau.com/static/images/Na/NationalParkVisitation_16/NationalParkVisitation/1.png' />
+                    <param name='animate_transition' value='yes' />
+                    <param name='display_static_image' value='yes' />
+                    <param name='display_spinner' value='yes' />
+                    <param name='display_overlay' value='yes' />
+                    <param name='display_count' value='yes' />
+                    <param name='language' value='en-US' />
+                </object>
+            </div>
+            <script type='text/javascript'>
+                var divElement = document.getElementById('viz1');
+                var vizElement = divElement.getElementsByTagName('object')[0];
+                vizElement.style.width = '100%';
+                vizElement.style.height = '500px';
+                var scriptElement = document.createElement('script');
+                scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+                vizElement.parentNode.insertBefore(scriptElement, vizElement);
+            </script>
+        </div>
+    </div>
+
+    <!-- Footer -->
+<div id="footer">
+    <p>&copy; Catie Wheatley 2025 &mdash; <a href="index.html">Back to Main Site</a> &mdash; <a href="Snake.html">🐍 Play Snake</a></p>
+</div>
+</body>
+</html>
