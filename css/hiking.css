@@ -2,15 +2,15 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Lora', 'Georgia', serif;
+    font-family: 'Lora', Georgia, serif;
     color: #212529;
-    background-color: #ffffff;
+    background-color: #fff;
 }
 
 /* === Navbar === */
 #navbar {
-    background-color: #ffffff;
-    padding: 16px 24px;
+    background-color: #fff;
+    padding: 18px 30px;
     border-bottom: 1px solid #e9ecef;
     display: flex;
     align-items: center;
@@ -21,8 +21,8 @@ body {
     color: #212529;
     text-decoration: none;
     font-family: 'Open Sans', Arial, sans-serif;
-    font-size: 0.9rem;
-    letter-spacing: 0.1em;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
 }
 
@@ -35,9 +35,9 @@ body {
     background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Hiking_to_the_summit_of_Mt._Whitney.jpg/1280px-Hiking_to_the_summit_of_Mt._Whitney.jpg');
     background-size: cover;
     background-position: center;
-    color: #ffffff;
+    color: #fff;
     text-align: center;
-    padding: 120px 20px;
+    padding: 140px 20px;
     position: relative;
 }
 
@@ -45,7 +45,7 @@ body {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0, 0, 0, 0.45);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 #hero h1, #hero p {
@@ -57,14 +57,172 @@ body {
     font-family: 'Lora', Georgia, serif;
     font-size: 3.5rem;
     font-weight: 700;
-    margin: 0 0 12px 0;
+    margin: 0 0 16px 0;
 }
 
 #hero p {
     font-family: 'Open Sans', Arial, sans-serif;
     font-size: 1.1rem;
-    margin: 0;
     font-style: italic;
+    font-weight: 300;
+    margin: 0;
 }
 
-/* ===
+/* === Anchor Nav === */
+#anchor-nav {
+    background-color: #fff;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 14px 20px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+#anchor-nav a {
+    color: #212529;
+    text-decoration: none;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border: 1px solid #dee2e6;
+    border-radius: 2px;
+}
+
+#anchor-nav a:hover {
+    background-color: #212529;
+    color: #fff;
+    border-color: #212529;
+}
+
+/* === Sections === */
+.section {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 60px 24px;
+}
+
+.alt-section {
+    background-color: #f8f9fa;
+    padding: 60px 24px;
+}
+
+.alt-section > * {
+    max-width: 780px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section h2, .alt-section h2 {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #212529;
+    margin-bottom: 16px;
+}
+
+.section p, .alt-section p {
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.9;
+    color: #6c757d;
+    margin-bottom: 12px;
+}
+
+/* === Images === */
+.trail-img {
+    width: 100%;
+    max-width: 780px;
+    display: block;
+    margin: 32px auto 0;
+}
+
+/* === Gear List === */
+.gear-list {
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 2;
+    padding-left: 1.5rem;
+    color: #212529;
+}
+
+.gear-list > li {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #212529;
+}
+
+.gear-list ul {
+    font-weight: 400;
+    color: #6c757d;
+    padding-left: 1.5rem;
+    margin: 4px 0 8px;
+    list-style-type: disc;
+}
+
+/* === Trail Cards === */
+.trail-cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+}
+
+.trail-card {
+    flex: 1 1 200px;
+    border: 1px solid #e9ecef;
+    padding: 20px 24px;
+    border-radius: 2px;
+    background: #fff;
+}
+
+.trail-card h3 {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 1.1rem;
+    color: #212529;
+    margin: 0 0 6px;
+}
+
+.trail-card p {
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin: 0;
+}
+
+/* === Video === */
+.video-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 28px;
+}
+
+.video-wrapper iframe {
+    max-width: 100%;
+}
+
+/* === Tableau === */
+.tableau-wrapper {
+    margin-top: 28px;
+}
+
+/* === Footer === */
+#footer {
+    background-color: #212529;
+    text-align: center;
+    padding: 30px;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.85rem;
+    color: #868e96;
+}
+
+#footer a {
+    color: #868e96;
+    text-decoration: underline;
+}
+
+#footer a:hover {
+    color: #fff;
+}
