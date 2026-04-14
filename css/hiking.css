@@ -185,4 +185,44 @@ body {
 
 .trail-card p {
     font-family: 'Open Sans', Arial, sans-serif;
-    font-s
+    font-size: 0.88rem;
+    color: #6c757d;
+    margin: 0;
+}
+
+/* === Video === */
+.video-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 28px;
+}
+
+.video-wrapper iframe {
+    max-width: 100%;
+    border-radius: 2px;
+}
+
+/* === Tableau === */
+.tableau-wrapper {
+    margin-top: 28px;
+}
+
+/* === Footer === */
+#footer {
+    background-color: #212529;
+    text-align: center;
+    padding: 28px;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 0.85rem;
+    color: #adb5bd;
+    border-top: 8px solid #e9ecef;
+}
+
+#footer a {
+    color: #adb5bd;
+    text-decoration: underline;
+}
+
+#footer a:hover {
+    color: #ffffff;
+}
